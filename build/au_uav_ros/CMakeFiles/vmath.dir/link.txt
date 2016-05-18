@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC    -shared -Wl,-soname,libvmath.so -o /home/viki/catkin_ws/devel/lib/libvmath.so CMakeFiles/vmath.dir/src/vmath.cpp.o 

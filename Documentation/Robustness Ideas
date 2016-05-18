@@ -1,0 +1,10 @@
+A List of ideas to add Robustness
+
+
+-TEST Cases!!
+
+-Multiple Xbee Connections on failure
+
+-Rethink and implement waypoint-hit logic
+
+-Clean up all of the defs and planeobjects

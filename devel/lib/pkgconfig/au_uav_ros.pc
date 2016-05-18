@@ -1,0 +1,8 @@
+prefix=/home/viki/catkin_ws/devel
+
+Name: au_uav_ros
+Description: Description of au_uav_ros
+Version: 0.0.0
+Cflags: -I/home/viki/catkin_ws/devel/include -I/home/viki/catkin_ws/src/au_uav_ros/include
+Libs: -L/home/viki/catkin_ws/devel/lib -lau_uav_ros
+Requires: roscpp au_uav_gui message_runtime

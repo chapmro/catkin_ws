@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC    -shared -Wl,-soname,libripna.so -o /home/viki/catkin_ws/devel/lib/libripna.so CMakeFiles/ripna.dir/src/ripna.cpp.o /home/viki/catkin_ws/devel/lib/libvmath.so /home/viki/catkin_ws/devel/lib/libstandardFuncs.so -Wl,-rpath,/home/viki/catkin_ws/devel/lib 

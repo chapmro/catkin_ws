@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "au_uav_pkg")
+set(au_uav_pkg_MAINTAINER "Craig Fisher <craig.fisher@scranton.edu>, Jonathan Taylor <jzt0011@auburn.edu>")
+set(au_uav_pkg_DEPRECATED "")
+set(au_uav_pkg_VERSION "0.0.0")
+set(au_uav_pkg_BUILD_DEPENDS )
+set(au_uav_pkg_RUN_DEPENDS "au_uav_ros" "au_uav_gui")
+set(au_uav_pkg_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,106 @@
+#include "au_uav_ros/collisionAvoidance.h"
+using namespace au_uav_ros;
+
+#define CA_PRINT_DEBUG true
+void CollisionAvoidance::ripnaAvoid(int id, std::map<int, au_uav_ros::PlaneObject> planes, std::map<int, au_uav_ros::SimPlaneObject> simPlanes, std::vector<waypoint> &wps) {
+	std::map<int, au_uav_ros::PlaneObject> allPlanes;
+	allPlanes.insert(planes.begin(), planes.end());
+	allPlanes.insert(simPlanes.begin(), simPlanes.end());
+
+
+	// md
+	// waypointContainer bothNewWaypoints = findNewWaypoint(allPlanes[id], planes);
+	waypointContainer bothNewWaypoints = findNewRIPNAWaypoint(allPlanes[id], allPlanes);
+	waypoint newWaypoint = bothNewWaypoints.plane1WP;
+	
+	// md
+	// ID: -1000 means dubins path was taken... (plane not in danger)
+	if (bothNewWaypoints.plane2ID != -1000) {
+		newWaypoint.planeID = id;
+		wps.push_back(newWaypoint);
+	}
+
+	if (bothNewWaypoints.plane2ID >= 0) {
+		waypoint newWaypoint2 = bothNewWaypoints.plane2WP;
+		newWaypoint2.planeID = bothNewWaypoints.plane2ID;
+		wps.push_back(newWaypoint2);
+	}
+}
+
+
+
+//Used to call APF collision avoidance.
+
+void CollisionAvoidance::apfAvoid(int id, 
+				std::map<int, PlaneObject> planes, 
+				std::map<int, SimPlaneObject> simPlanes,
+				std::vector<waypoint> &wps) {
+        std::map<int, au_uav_ros::PlaneObject> allPlanes;
+	allPlanes.insert(planes.begin(), planes.end());
+	allPlanes.insert(simPlanes.begin(), simPlanes.end());
+
+        //Get an avoidance waypoint for APF
+	waypoint newWaypoint = findNewAPFWaypoint(allPlanes[id], allPlanes);
+	if (newWaypoint == allPlanes[id].getDestination())
+		ROS_ERROR("NULL");
+	wps.push_back(newWaypoint);
+}	
+
+/*
+
+void CollisionAvoidance::ccAvoid(int id, std::map<int, au_uav_ros::PlaneObject> planes, 
+	std::map<int,au_uav_ros::SimPlaneObject> simPlanes,std::vector<waypoint> &wps) {
+
+	std::map<int, au_uav_ros::PlaneObject> allPlanes;
+	allPlanes.insert(planes.begin(), planes.end());
+	allPlanes.insert(simPlanes.begin(), simPlanes.end());
+
+	/*
+	waypointContainer bothNewWaypoints = findNewCCWaypoint(allPlanes[id], allPlanes);
+	waypoint newWaypoint = bothNewWaypoints.plane1WP;
+	
+
+	// ID: -1000 means dubins path was taken... (plane not in danger)
+	if (bothNewWaypoints.plane2ID != -1000) {
+		newWaypoint.planeID = id;
+		wps.push_back(newWaypoint);
+	}
+
+	if (bothNewWaypoints.plane2ID >= 0) {
+		waypoint newWaypoint2 = bothNewWaypoints.plane2WP;
+		newWaypoint2.planeID = bothNewWaypoints.plane2ID;
+		wps.push_back(newWaypoint2);
+	}
+	*/
+//}
+
+void CollisionAvoidance::distrubuted_avoid(int id, std::map<int, PlaneObject> planes, std::map<int, SimPlaneObject> simPlanes, waypoint &avoidanceWP) {
+	// This should never happen since the function is only called
+	// after the id is confirmed. But just in case..
+	if (simPlanes.find(id) == simPlanes.end()) {
+		return;
+	}
+
+	std::map<int, PlaneObject> allPlanes;
+	allPlanes.insert(planes.begin(), planes.end());
+	allPlanes.insert(simPlanes.begin(), simPlanes.end());
+
+	// std::map<int, SimPlaneObject>::iterator it;
+	// for (it = simPlanes.begin(); it != simPlanes.end(); ++it) {
+	// 	// Don't run CA on the plane that just pushed the update?
+	// 	// This can be changed.
+	// 	if (it->first == id) {
+	// 		continue;
+	// 	}
+
+	// 	if (ipn::checkForThreats(simPlanes[it->first], allPlanes, avoidanceWP)) {
+	// 		avoidanceWP.planeID = it->first;
+	// 		wps.push_back(avoidanceWP);
+	// 	}
+		
+	// }
+
+	if (ipn::checkForThreats(simPlanes[id], allPlanes, avoidanceWP)) {
+		avoidanceWP.planeID = id;
+	}
+}

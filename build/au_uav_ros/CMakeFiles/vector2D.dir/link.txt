@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC    -shared -Wl,-soname,libvector2D.so -o /home/viki/catkin_ws/devel/lib/libvector2D.so CMakeFiles/vector2D.dir/src/vector2D.cpp.o 

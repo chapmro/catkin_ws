@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/viki/catkin_ws/src/au_uav_ros/include/au_uav_ros/standardDefs.h
+math.h
+-
+boost/thread.hpp
+/home/viki/catkin_ws/src/au_uav_ros/include/au_uav_ros/boost/thread.hpp
+
+/home/viki/catkin_ws/src/au_uav_ros/include/au_uav_ros/vector2D.h
+au_uav_ros/standardDefs.h
+/home/viki/catkin_ws/src/au_uav_ros/include/au_uav_ros/au_uav_ros/standardDefs.h
+
+/home/viki/catkin_ws/src/au_uav_ros/src/vector2D.cpp
+au_uav_ros/vector2D.h
+/home/viki/catkin_ws/src/au_uav_ros/src/au_uav_ros/vector2D.h
+
